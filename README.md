@@ -1,0 +1,3 @@
+# autoPatch
+基于jgit、jfoenix实现
+根据git项目和提交记录的区别提取war包文件中两次提交的差异的补丁

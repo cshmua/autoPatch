@@ -1,6 +1,7 @@
 package sample;
 
 import autopatch.Application;
+import autopatch.constants.CommonConsts;
 import autopatch.domain.ComboBoxItem;
 import autopatch.domain.PatchUrl;
 import autopatch.helper.GitHelper;
@@ -9,6 +10,7 @@ import com.jfoenix.controls.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.input.DragEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
@@ -112,7 +114,7 @@ public class Controller implements Initializable {
             fileChooser.setInitialDirectory(new File(cache));
         }
         //设置扩展名
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("War Files", "*.war"));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("War or Jar Files", "*.war","*.jar"));
         File file = fileChooser.showOpenDialog(new Stage());
         if(file!=null && file.exists()) {
             //写缓存
@@ -162,13 +164,28 @@ public class Controller implements Initializable {
                 //清空统计情况
                 PatchUrl.getInstance().count=0;
                 //输出补丁文件
-                Application.doGetPatch();
+                Application.doGetPatch2();
             } catch (Exception e) {
                 PatchUrl.getInstance().resultMessage.append(e.getMessage());
                 e.printStackTrace();
             }
         }
         _showResultDialog(PatchUrl.getInstance().resultMessage.toString());
+    }
+
+    /**
+     * 拖拽war包事件
+     * @param dragEvent 拖拽事件对象
+     */
+    @FXML
+    public void DragFile(DragEvent dragEvent) {
+        File file = dragEvent.getDragboard().getFiles().get(0);
+        String fileName = file.getAbsolutePath();
+        if(fileName.endsWith(CommonConsts.WAR) || fileName.endsWith(CommonConsts.JAR)) {
+            tf_targetWar.setText(fileName);
+        }else{
+            System.out.println("请拖入一个war包！");
+        }
     }
 
     /**
@@ -253,5 +270,4 @@ public class Controller implements Initializable {
         alert.setContent(layout);
         alert.show();
     }
-
 }

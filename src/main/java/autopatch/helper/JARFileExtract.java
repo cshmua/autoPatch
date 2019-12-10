@@ -1,5 +1,6 @@
 package autopatch.helper;
 
+import autopatch.domain.PatchInfo;
 import autopatch.domain.PatchPackage;
 import autopatch.domain.PatchUrl;
 import autopatch.utils.JARFileUtils;
@@ -36,7 +37,7 @@ public class JARFileExtract {
                 //js和jsp文件
                 List<String> fileJsAndJsp = new ArrayList<>();
                 for(String file : warPackage.getPatchFiles()){
-                    if(file.contains(".js") || file.contains(".jsp") || file.contains(".css")){
+                    if(file.contains(".js") || file.contains(".jsp") || file.contains(".css") || file.contains(".jpg") || file.contains(".png")){
                         //将名称替换为war包的名称
                         fileJsAndJsp.add(file.replaceAll(file.split("/")[0], ""));
                     }
@@ -152,4 +153,127 @@ public class JARFileExtract {
         }
     }
 
+    public static void extractJARsToTempFolder(String destPath, PatchPackage patchPackages) {
+        if(patchPackages.isWar()) {
+            try {
+                JarFile jarFile = new JarFile(destPath);
+                Enumeration<JarEntry> enums = jarFile.entries();
+                System.out.println("auth-patch begin:");
+                //jar包文件
+                List<String> fileJarNames = patchPackages.getJarFiles();
+                //js和jsp文件
+                List<String> fileJsAndJsp = new ArrayList<>();
+                for(PatchInfo patchInfo : patchPackages.getPatchInfos()){
+                    String file = patchInfo.getFliePath();
+                    if(file.contains(".js") || file.contains(".jsp") || file.contains(".css") || file.contains(".jpg") || file.contains(".png")){
+                        //将名称替换为war包的名称
+                        fileJsAndJsp.add(file.replaceAll(file.split("/")[0], ""));
+                    }
+                }
+                //String dir = JARFileUtils.getFileNameNoEx(destPath);
+                String dir = PatchUrl.getInstance().getTargetDir()+File.separator+PatchUrl.getInstance().getTargetFileName();
+                new File(dir).mkdirs();
+                while (enums.hasMoreElements()) {
+                    JarEntry entry = enums.nextElement();
+                    for (int i = 0; i < fileJarNames.size(); i++) {
+                        String fileJarName = fileJarNames.get(i);
+                        if (entry.getName().contains(fileJarName) || entry.getName().contains(JARFileUtils.getFileNameNoEx(fileJarName))) {
+                            String[] files = entry.getName().split("/");
+                            String newFileName = files[files.length - 1];
+                            File toWrite = new File(dir + "/" + "tmp-" + newFileName);
+                            FileUtils.copyInputStreamToFile(jarFile.getInputStream(entry), toWrite);
+                            System.out.println(entry.getName());
+                        }
+                    }
+                    for (String fileName : fileJsAndJsp) {
+                        if (fileName.equals("/" + entry.getName())) {
+                            String toWrite = dir + "/" + entry.getName();
+                            FileUtils.copyInputStreamToFile(jarFile.getInputStream(entry), new File(toWrite));
+                            PatchUrl.getInstance().count++;
+                            PatchUrl.getInstance().resultMessage.append(entry.getName()).append('\n');
+                            System.out.println(entry.getName());
+                        }
+                    }
+                }
+                jarFile.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            throw new RuntimeException("解压jia文件需要传入war包！");
+        }
+    }
+
+    public static void extractResourcesToTempFolder(String destPath, PatchPackage patchPackage) {
+        if(patchPackage.isWar()){
+            try {
+                List<String> fileJarNames = patchPackage.getJarFiles();
+                for (String fileJarName : fileJarNames) {
+                    String dir = PatchUrl.getInstance().getTargetDir() + File.separator + PatchUrl.getInstance().getTargetFileName();
+                    //实际jar文件地址
+                    String jarPath = dir + "/" + "tmp-" + fileJarName;
+                    JarFile jarFile;
+                    try {
+                        jarFile = new JarFile(jarPath);
+                    } catch (Exception e) {
+                        PatchUrl.getInstance().resultMessage.append(jarPath).append(" 不存在;");
+                        System.out.println(jarPath + " 不存在;");
+                        continue;
+                    }
+                    //建立jar文件的目录
+                    String dirPath = dir + "/" + fileJarName;
+                    Enumeration<JarEntry> enums = jarFile.entries();
+                    System.out.println("war包抽取开始:" + dirPath);
+                    List<PatchInfo> patchInfos = patchPackage.getPatchInfos();
+                    while (enums.hasMoreElements()) {
+                        JarEntry entry = enums.nextElement();
+                        for (PatchInfo file : patchInfos) {
+                            if ((fileJarName + "/" + entry.getName()).equals(file.getFliePath())  //普通.class文件
+                                    //内部类
+                                    || ((entry.getName().endsWith(".class")) && ((fileJarName + "/" + JARFileUtils.getFileNameNoEx(entry.getName())).contains(JARFileUtils.getFileNameNoEx(file.getFliePath()) + "$")))) {
+                                String toWrite = dir + "/" + fileJarName + "/" + entry.getName();
+                                FileUtils.copyInputStreamToFile(jarFile.getInputStream(entry), new File(toWrite));
+                                PatchUrl.getInstance().count++;
+                                PatchUrl.getInstance().resultMessage.append(entry.getName()).append('\n');
+                                System.out.println(entry.getName());
+                            }
+                        }
+                    }
+                    jarFile.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else{
+            String dir = PatchUrl.getInstance().getTargetDir() + File.separator + PatchUrl.getInstance().getTargetFileName();
+            JarFile jarFile;
+            try {
+                jarFile = new JarFile(destPath);
+                String fileJarName = JARFileUtils.getRealFileName(destPath);
+                //建立jar文件的目录
+                String dirPath = dir + "/" + fileJarName;
+                Enumeration<JarEntry> enums = jarFile.entries();
+                System.out.println("jar包抽取开始:" + dirPath);
+                List<PatchInfo> patchInfos = patchPackage.getPatchInfos();
+                while (enums.hasMoreElements()) {
+                    JarEntry entry = enums.nextElement();
+                    for (PatchInfo file : patchInfos) {
+                        if ((fileJarName + "/" + entry.getName()).equals(file.getFliePath())  //普通.class文件
+                                //内部类
+                                || ((entry.getName().endsWith(".class")) && ((fileJarName + "/" + JARFileUtils.getFileNameNoEx(entry.getName())).contains(JARFileUtils.getFileNameNoEx(file.getFliePath()) + "$")))) {
+                            String toWrite = dir + "/" + fileJarName + "/" + entry.getName();
+                            FileUtils.copyInputStreamToFile(jarFile.getInputStream(entry), new File(toWrite));
+                            PatchUrl.getInstance().count++;
+                            PatchUrl.getInstance().resultMessage.append(entry.getName()).append('\n');
+                            System.out.println(entry.getName());
+                        }
+                    }
+                }
+                jarFile.close();
+            } catch (Exception e) {
+                PatchUrl.getInstance().resultMessage.append(destPath).append(" 不存在;");
+                System.out.println(destPath + " 不存在;");
+            }
+        }
+    }
 }

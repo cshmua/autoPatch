@@ -1,4 +1,4 @@
-package autopatch.porcelain;
+package autopatch.helper;
 
 import autopatch.domain.PatchUrl;
 import org.apache.commons.lang3.StringUtils;

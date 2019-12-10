@@ -38,7 +38,7 @@ public class GitHelper {
         List<ComboBoxItem> comboBoxItemList = new ArrayList<>();
         for (RevCommit revCommit : git.log().call()) {
             comboBoxItemList.add(new ComboBoxItem(revCommit.getId().getName(), revCommit.getShortMessage()));
-            if (++i == 10) {//获取十次提交记录
+            if (++i == 20) {//获取十次提交记录
                 return comboBoxItemList;
             }
         }

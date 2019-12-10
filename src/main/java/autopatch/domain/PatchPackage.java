@@ -26,6 +26,11 @@ public class PatchPackage {
     private Set<String> patchFiles;
 
     /**
+     * 补丁文件集合2.0
+     */
+    private List<PatchInfo> patchInfos;
+
+    /**
      * war包时单独保存jar文件补丁包，jar包时为空
      */
     private List<String> jarFiles;
@@ -72,5 +77,13 @@ public class PatchPackage {
 
     public void setVersion(String version) {
         this.version = version;
+    }
+
+    public List<PatchInfo> getPatchInfos() {
+        return patchInfos;
+    }
+
+    public void setPatchInfos(List<PatchInfo> patchInfos) {
+        this.patchInfos = patchInfos;
     }
 }

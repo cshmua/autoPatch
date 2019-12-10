@@ -45,7 +45,7 @@
             <font>
                 <Font name="System Bold" size="15.0" />
             </font></Label>
-        <JFXTextField fx:id="tf_targetWar" focusColor="DEEPSKYBLUE" layoutX="420.0" layoutY="314.0" promptText="请选择或输入war包地址" prefWidth="250.0" style="-fx-background-color: #FFFFFF;" />
+        <JFXTextField fx:id="tf_targetWar" focusColor="DEEPSKYBLUE" onDragExited="#DragFile" layoutX="420.0" layoutY="314.0" promptText="请选择或输入war包地址" prefWidth="250.0" style="-fx-background-color: #FFFFFF;" />
 
         <Label layoutX="330.0" layoutY="344.0" text="补丁目录名" textFill="DARKORANGE">
             <font>

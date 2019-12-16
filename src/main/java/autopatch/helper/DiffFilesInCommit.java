@@ -1,5 +1,6 @@
 package autopatch.helper;
 
+import autopatch.constants.CommonConsts;
 import autopatch.domain.PatchUrl;
 import org.apache.commons.lang3.StringUtils;
 import org.eclipse.jgit.api.Git;
@@ -84,8 +85,8 @@ public class DiffFilesInCommit {
         //首项加上后缀
         //tmp[0] = tmp[0]+"-"+suffix+".jar";
         //尾项如果是.java文件转换成.class文件
-        if(tmp[tmp.length-1].contains("java")){
-            tmp[tmp.length-1] = tmp[tmp.length-1].replaceAll(".java",".class");
+        if(tmp[tmp.length-1].contains(CommonConsts.JAVA)){
+            tmp[tmp.length-1] = tmp[tmp.length-1].replaceAll(CommonConsts.JAVA,CommonConsts.CLASS);
         }
         StringBuilder sb = new StringBuilder();
         for(int i = 0; i < tmp.length; i++){

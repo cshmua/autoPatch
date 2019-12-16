@@ -17,8 +17,6 @@ import java.util.*;
  */
 public class JARFileUtils {
 
-    public static String WEB_INF = "/WEB-INF/";
-
     /**
      * 获取去掉文件后缀的文件名
      *
@@ -65,46 +63,6 @@ public class JARFileUtils {
         return destPath;
     }
 
-    public static Map<String, PatchPackage> getPatchPackages(String destPatch, List<String> fileNames) throws Exception {
-        PatchPackage war = new PatchPackage();
-        war.setName(JARFileUtils.getRealFileName(destPatch));
-        if (destPatch.endsWith(CommonConsts.WAR)) {
-            war.setWar(true);
-        } else {
-            war.setWar(false);
-        }
-        List<String> jars = new ArrayList<String>();
-        List<String> newFileNames = new ArrayList<>();
-        Map<String, String> newJars = new HashMap<>();
-        Map<String, PatchPackage> patchs = new HashMap<>();
-        patchs.put(getFileNameNoEx(war.getName()), war);
-        for (String fileName : fileNames) {
-            String jar = fileName.split("/")[0];
-            if (StringUtils.isBlank(newJars.get(jar))) {
-                File pomFile = new File(PatchUrl.getInstance().getDirGit() + "/" + jar + "/pom.xml");
-                newJars.put(jar, jar + "-" + MavenUtils.getVersion(pomFile) + CommonConsts.JAR);
-            }
-            if (!jars.contains(newJars.get(jar))) {
-                jars.add(newJars.get(jar));
-            }
-            String newFileName = fileName.replaceAll(jar, newJars.get(jar));
-            if (patchs.get(newJars.get(jar)) == null) {
-                PatchPackage patchPackage = new PatchPackage();
-                Set<String> fileSet = new HashSet<>();
-                fileSet.add(newFileName);
-                patchPackage.setPatchFiles(fileSet);
-                patchs.put(newJars.get(jar), patchPackage);
-            } else {
-                patchs.get(newJars.get(jar)).getPatchFiles().add(newFileName);
-            }
-            newFileNames.add(newFileName);
-
-        }
-        war.setJarFiles(jars);
-        war.setPatchFiles(new HashSet<>(newFileNames));
-        return patchs;
-    }
-
     public static PatchPackage getPatchPackage(String destPatch, List<String> fileNames) throws Exception {
         PatchPackage war = new PatchPackage();
         List<PatchInfo> patchInfos = new ArrayList<>(fileNames.size());
@@ -114,20 +72,18 @@ public class JARFileUtils {
         } else {
             war.setWar(false);
         }
-        List<String> jars = new ArrayList<String>();
-        List<String> newFileNames = new ArrayList<>();
+        List<String> jars = new ArrayList<>();
         Map<String, String> newJars = new HashMap<>();
-        Map<String, PatchPackage> patchs = new HashMap<>();
-        patchs.put(getFileNameNoEx(war.getName()), war);
         for (String fileName : fileNames) {
             PatchInfo patchInfo = new PatchInfo();
             String jar = fileName.split("/")[0];
             if (StringUtils.isBlank(newJars.get(jar))) {
                 File pomFile = new File(PatchUrl.getInstance().getDirGit() + "/" + jar + "/pom.xml");
-                newJars.put(jar, jar + "-" + MavenUtils.getVersion(pomFile) + CommonConsts.JAR);
+                String version = MavenUtils.getVersion(pomFile);
+                newJars.put(jar, jar + "-" + version + CommonConsts.JAR);
             }
             patchInfo.setFileName(newJars.get(jar));
-            patchInfo.setFliePath(fileName.replaceAll(jar, newJars.get(jar)));
+            patchInfo.setFliePath(fileName.substring(jar.length()+1));
             patchInfos.add(patchInfo);
             if (!jars.contains(newJars.get(jar))) {
                 jars.add(newJars.get(jar));

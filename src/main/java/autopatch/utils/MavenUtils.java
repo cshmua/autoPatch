@@ -57,17 +57,21 @@ public class MavenUtils {
      */
     private static String getParentVersion(Document doc) {
         NodeList parent = doc.getElementsByTagName("parent");
-        if (parent == null || parent.getLength() == 0) {
-            throw new RuntimeException("错误的pom.xml文件：未找到parent节点！");
-        }
-        NodeList parentInfo = parent.item(0).getChildNodes();
-        for (int j = 0; j < parentInfo.getLength(); j++) {
-            Node parentVersion = parentInfo.item(j);
-            if ("version".equals(parentVersion.getNodeName())) {
-                return parentVersion.getFirstChild().getNodeValue();
+        try {
+            if (parent == null || parent.getLength() == 0) {
+                throw new RuntimeException("错误的pom.xml文件：未找到parent节点！");
             }
+            NodeList parentInfo = parent.item(0).getChildNodes();
+            for (int j = 0; j < parentInfo.getLength(); j++) {
+                Node parentVersion = parentInfo.item(j);
+                if ("version".equals(parentVersion.getNodeName())) {
+                    return parentVersion.getFirstChild().getNodeValue();
+                }
+            }
+            throw new RuntimeException("错误的pom.xml文件：未找到parent.version！");
+        }catch (Exception e){
+            return "";
         }
-        throw new RuntimeException("错误的pom.xml文件：未找到parent.version！");
     }
 
 }

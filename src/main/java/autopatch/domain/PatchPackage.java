@@ -21,11 +21,6 @@ public class PatchPackage {
     private boolean isWar;
 
     /**
-     * 补丁文件名称
-     */
-    private Set<String> patchFiles;
-
-    /**
      * 补丁文件集合2.0
      */
     private List<PatchInfo> patchInfos;
@@ -53,14 +48,6 @@ public class PatchPackage {
 
     public void setWar(boolean war) {
         isWar = war;
-    }
-
-    public Set<String> getPatchFiles() {
-        return patchFiles;
-    }
-
-    public void setPatchFiles(Set<String> patchFiles) {
-        this.patchFiles = patchFiles;
     }
 
     public List<String> getJarFiles() {

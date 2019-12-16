@@ -41,7 +41,7 @@
             </validators>
         </JFXComboBox>
 
-        <Label layoutX="330.0" layoutY="315.0" text="war包地址" textFill="DARKORANGE">
+        <Label layoutX="330.0" layoutY="315.0" onDragExited="#DragFile" text="war包地址" textFill="DARKORANGE">
             <font>
                 <Font name="System Bold" size="15.0" />
             </font></Label>

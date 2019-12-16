@@ -156,15 +156,15 @@ public class Controller implements Initializable {
      */
     @FXML
     public void onCreatePatch() {
+        //清空输出字符串缓存
+        PatchUrl.getInstance().resultMessage.delete(0,PatchUrl.getInstance().resultMessage.length());
+        //清空统计情况
+        PatchUrl.getInstance().count=0;
         //校验输入，无误时执行提取动作
         if(_checkForm()){
             try {
-                //清空输出字符串缓存
-                PatchUrl.getInstance().resultMessage.delete(0,PatchUrl.getInstance().resultMessage.length());
-                //清空统计情况
-                PatchUrl.getInstance().count=0;
                 //输出补丁文件
-                Application.doGetPatch2();
+                Application.doGetPatch();
             } catch (Exception e) {
                 PatchUrl.getInstance().resultMessage.append(e.getMessage());
                 e.printStackTrace();
@@ -183,8 +183,9 @@ public class Controller implements Initializable {
         String fileName = file.getAbsolutePath();
         if(fileName.endsWith(CommonConsts.WAR) || fileName.endsWith(CommonConsts.JAR)) {
             tf_targetWar.setText(fileName);
+            PatchUrl.getInstance().setDestPath(fileName);
         }else{
-            System.out.println("请拖入一个war包！");
+            System.out.println("请拖入一个war或者jar包！");
         }
     }
 
@@ -219,7 +220,7 @@ public class Controller implements Initializable {
         PatchUrl patchUrl = PatchUrl.getInstance();
         boolean flag = true;
         if(StringUtils.isBlank(patchUrl.getDestPath())){
-            patchUrl.resultMessage.append("war包不能为空！\n");
+            patchUrl.resultMessage.append("war或jar包或不能为空！\n");
             flag = false;
         }
         if(StringUtils.isBlank(patchUrl.getDirGit())){

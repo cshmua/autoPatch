@@ -77,6 +77,10 @@ public class JARFileUtils {
         for (String fileName : fileNames) {
             PatchInfo patchInfo = new PatchInfo();
             String jar = fileName.split("/")[0];
+            //过滤一些文件，如pom.xml
+            if(fileName.length()==jar.length()){
+                continue;
+            }
             if (StringUtils.isBlank(newJars.get(jar))) {
                 File pomFile = new File(PatchUrl.getInstance().getDirGit() + "/" + jar + "/pom.xml");
                 String version = MavenUtils.getVersion(pomFile);

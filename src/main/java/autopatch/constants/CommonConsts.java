@@ -30,6 +30,8 @@ public interface CommonConsts {
 
     String JAR  = ".jar";
 
+    String POM  = "pom.xml";
+
     String CLASSES_DIRECTORY = "WEB-INF/classes/";
 
 }

@@ -64,13 +64,18 @@ public class JARFileExtract {
                 while (enums.hasMoreElements()) {
                     JarEntry entry = enums.nextElement();
                     //抽出临时的jar文件，供接下来抽取
-                    for (String fileJarName : fileJarNames) {
+                    for (int i = 0; i < fileJarNames.size() ;i++) {
+                        String fileJarName = fileJarNames.get(i);
                         if (entry.getName().contains(fileJarName) || entry.getName().contains(JARFileUtils.getFileNameNoEx(fileJarName))) {
                             String[] files = entry.getName().split("/");
                             String newFileName = files[files.length - 1];
                             File toWrite = new File(dir + "/" + "tmp-" + newFileName);
                             FileUtils.copyInputStreamToFile(jarFile.getInputStream(entry), toWrite);
-                            System.out.println(entry.getName());
+                            //更新-classes后缀的jar文件
+                            if (!entry.getName().contains(fileJarName) && entry.getName().contains(JARFileUtils.getFileNameNoEx(fileJarName))) {
+                                fileJarNames.set(i,newFileName);
+                            }
+                            System.out.println(fileJarNames.get(i));
                         }
                     }
                     //在war包下的js文件直接抽取

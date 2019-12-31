@@ -93,7 +93,7 @@ public class JARFileExtract {
                         if ((CommonConsts.CLASSES_DIRECTORY + file).equals(entry.getName())
                                 //内部类
                                 || ((entry.getName().endsWith(".class")) && (JARFileUtils.getFileNameNoEx(entry.getName()).contains(JARFileUtils.getFileNameNoEx(file) + "$")))) {
-                            String toWrite = dir + "/" + JARFileUtils.getFileNameNoEx(patchPackages.getName())+ CommonConsts.JAR + "/" + file;
+                            String toWrite = dir + "/" + JARFileUtils.getFileNameNoEx(patchPackages.getName())+ CommonConsts.JAR + "/" + entry.getName();
                             FileUtils.copyInputStreamToFile(jarFile.getInputStream(entry), new File(toWrite));
                             PatchUrl.getInstance().count++;
                             PatchUrl.getInstance().resultMessage.append(entry.getName()).append('\n');

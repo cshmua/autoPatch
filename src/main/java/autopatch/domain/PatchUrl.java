@@ -21,8 +21,6 @@ public class PatchUrl {
 
     private String targetFileName;  //补丁文件输出名称
 
-    private String suffix;      //文件后缀,形如XXXXs-3.0.4.1-SNAPSHOT，即待打包文件的打包version
-
     private String oldCommit;   //上一次的commit
 
     private String newCommit;   //本次的commit
@@ -47,14 +45,6 @@ public class PatchUrl {
 
     public void setDirGit(String dirGit) {
         this.dirGit = dirGit;
-    }
-
-    public String getSuffix() {
-        return suffix;
-    }
-
-    public void setSuffix(String suffix) {
-        this.suffix = suffix;
     }
 
     public String getOldCommit() {

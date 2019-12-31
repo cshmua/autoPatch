@@ -5,7 +5,6 @@ import autopatch.domain.PatchInfo;
 import autopatch.domain.PatchPackage;
 import autopatch.domain.PatchUrl;
 import autopatch.utils.JARFileUtils;
-import autopatch.utils.MavenUtils;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -14,12 +13,11 @@ import java.util.*;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-/**
- * @Description: 解压jar包的方法
- * @author: CSH
- * @date: 2019年04月10日
- * @version: V1.0
- */
+/** 
+ * 解压jar包的方法
+ * @author CSH
+ * @since 2019/12/31
+ */ 
 public class JARFileExtract {
 
     /**

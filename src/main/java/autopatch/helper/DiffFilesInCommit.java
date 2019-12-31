@@ -1,7 +1,6 @@
 package autopatch.helper;
 
 import autopatch.constants.CommonConsts;
-import autopatch.domain.PatchUrl;
 import org.apache.commons.lang3.StringUtils;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -19,9 +18,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 提取两次提交文件的新增或修改差异
+ * @author CSH
+ * @since 2019/12/31
+ * <pre>
  * Simple snippet which shows how to retrieve the diffs
  * between two commits
- */
+ * </pre>
+ */ 
 public class DiffFilesInCommit {
 
     public static List<String> listDiff(Git git, String newCommit) throws GitAPIException, IOException {
@@ -50,7 +54,7 @@ public class DiffFilesInCommit {
             switch (diff.getChangeType()) {
                 case ADD:
                 case MODIFY:
-                    fileNames.add(getZIPAddress(diff.getNewPath(), PatchUrl.getInstance().getSuffix()));
+                    fileNames.add(getZIPAddress(diff.getNewPath()));
                     System.out.println(fileNames.get(i));
                     break;
                 default:
@@ -80,7 +84,7 @@ public class DiffFilesInCommit {
         }
     }
 
-    private static String getZIPAddress(String path, String suffix){
+    private static String getZIPAddress(String path){
         String [] tmp = path.split("/");
         //首项加上后缀
         //tmp[0] = tmp[0]+"-"+suffix+".jar";

@@ -13,10 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @Description: 获取两次git提交差异文件，即待提取的补丁文件
- * @author: CSH
- * @date: 2019年04月10日
- * @version: V1.0
+ * 获取两次git提交差异文件，即待提取的补丁文件
+ * @author CSH
+ * @since 2019/12/31
  */
 public class GitHelper {
 

@@ -12,11 +12,10 @@ import org.eclipse.jgit.lib.Repository;
 
 import java.util.List;
 
-/**
- * @Description: Application$
- * @author: CSH
- * @date: 2019年04月10日
- * @version: V1.0
+/***
+ * 打包调用的实际方法
+ * @author CSH
+ * @since 2019/12/31
  */
 public class Application {
     public static void main(String[] args) throws Exception {

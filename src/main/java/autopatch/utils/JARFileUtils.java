@@ -10,10 +10,9 @@ import java.io.File;
 import java.util.*;
 
 /**
- * @Description: 文件工具类
- * @author: CSH
- * @date: 2019年04月11日
- * @version: V1.0
+ * 文件工具类
+ * @author CSH
+ * @since 2019/12/31
  */
 public class JARFileUtils {
 

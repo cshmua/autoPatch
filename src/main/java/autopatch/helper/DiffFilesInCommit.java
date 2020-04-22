@@ -56,11 +56,11 @@ public class DiffFilesInCommit {
                 case MODIFY:
                     fileNames.add(getZIPAddress(diff.getNewPath()));
                     System.out.println(fileNames.get(i));
+                    i++;
                     break;
                 default:
                     break;
             }
-            i++;
         }
         return fileNames;
     }

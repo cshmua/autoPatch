@@ -97,8 +97,9 @@ public class DiffFilesInCommit {
         boolean flag = false;
         sb.append(tmp[0]).append('/');
         for(int i = 1; i < tmp.length; i++){
-            //过滤一些前置的多余的文件目录
-            if(tmp[i].equals(CommonConsts.DIR_JAVA) || tmp[i].equals(CommonConsts.DIR_RESOURCES) || tmp[i].equals(CommonConsts.DIR_WEBAPP)) {
+            //过滤一些前置的多余的文件目录(连续的)
+            if(!flag &&(tmp[i].equals(CommonConsts.DIR_JAVA) || tmp[i].equals(CommonConsts.DIR_RESOURCES) || tmp[i].equals(CommonConsts.DIR_WEBAPP))) {
+                //前置过滤到此为止
                 flag = true;
                 continue;
             }

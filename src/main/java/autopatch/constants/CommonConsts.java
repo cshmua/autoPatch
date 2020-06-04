@@ -34,7 +34,7 @@ public interface CommonConsts {
 
     String DIR_JAVA = "java";
 
-    String DIR_RESOURCE = "resource";
+    String DIR_RESOURCES = "resources";
 
     String DIR_WEBAPP = "webapp";
 

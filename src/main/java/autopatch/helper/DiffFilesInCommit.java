@@ -84,7 +84,35 @@ public class DiffFilesInCommit {
         }
     }
 
+
     private static String getZIPAddress(String path){
+        String [] tmp = path.split("/");
+        //首项加上后缀
+        //tmp[0] = tmp[0]+"-"+suffix+".jar";
+        //尾项如果是.java文件转换成.class文件
+        if(tmp[tmp.length-1].contains(CommonConsts.JAVA)){
+            tmp[tmp.length-1] = tmp[tmp.length-1].replaceAll(CommonConsts.JAVA,CommonConsts.CLASS);
+        }
+        StringBuilder sb = new StringBuilder();
+        boolean flag = false;
+        sb.append(tmp[0]).append('/');
+        for(int i = 1; i < tmp.length; i++){
+            //过滤一些前置的多余的文件目录
+            if(tmp[i].equals(CommonConsts.DIR_JAVA) || tmp[i].equals(CommonConsts.DIR_RESOURCE) || tmp[i].equals(CommonConsts.DIR_WEBAPP)) {
+                flag = true;
+                continue;
+            }
+            if(!flag){
+                continue;
+            }
+            sb.append(tmp[i]).append('/');
+        }
+        if(!sb.toString().isEmpty())
+            sb.deleteCharAt(sb.length()-1);
+        return sb.toString();
+    }
+
+/*    private static String getZIPAddress(String path){
         String [] tmp = path.split("/");
         //首项加上后缀
         //tmp[0] = tmp[0]+"-"+suffix+".jar";
@@ -102,5 +130,5 @@ public class DiffFilesInCommit {
         if(!sb.toString().isEmpty())
             sb.deleteCharAt(sb.length()-1);
         return sb.toString();
-    }
+    }*/
 }

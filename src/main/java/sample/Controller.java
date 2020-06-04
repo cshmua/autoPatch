@@ -46,6 +46,9 @@ public class Controller implements Initializable {
     @FXML
     public JFXTextField tf_targetFile;
     @FXML
+    public JFXTextField tf_version;
+
+    @FXML
     public JFXButton btn_create;
     @FXML
     public JFXComboBox<ComboBoxItem> cb_oldCommit;
@@ -247,6 +250,9 @@ public class Controller implements Initializable {
             patchUrl.resultMessage.append("本次提交不能为空！\n");
         }else {
             patchUrl.setNewCommit(cb_newCommit.getSelectionModel().getSelectedItem().getKey());
+        }
+        if(!StringUtils.isBlank(tf_version.getText())){
+            patchUrl.setVersion(tf_version.getText());
         }
         return flag;
     }

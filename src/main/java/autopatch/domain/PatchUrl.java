@@ -25,6 +25,8 @@ public class PatchUrl {
 
     private String newCommit;   //本次的commit
 
+    private String version;     //版本号字段，非必填，供某些需要手动输入版本号的情况
+
     public volatile int count;   //打包的数量
 
     public volatile StringBuffer resultMessage;    //输出结果
@@ -77,6 +79,14 @@ public class PatchUrl {
 
     public void setTargetFileName(String targetFileName) {
         this.targetFileName = targetFileName;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
     }
 
     public static PatchUrl getInstance(){

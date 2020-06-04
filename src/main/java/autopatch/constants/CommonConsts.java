@@ -32,6 +32,12 @@ public interface CommonConsts {
 
     String POM  = "pom.xml";
 
+    String DIR_JAVA = "java";
+
+    String DIR_RESOURCE = "resource";
+
+    String DIR_WEBAPP = "webapp";
+
     String CLASSES_DIRECTORY = "WEB-INF/classes/";
 
 }

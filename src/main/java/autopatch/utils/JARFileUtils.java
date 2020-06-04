@@ -81,8 +81,13 @@ public class JARFileUtils {
                 continue;
             }
             if (StringUtils.isBlank(newJars.get(jar))) {
-                File pomFile = new File(PatchUrl.getInstance().getDirGit() + "/" + jar + "/pom.xml");
-                String version = MavenUtils.getVersion(pomFile);
+                String version;
+                if(StringUtils.isNotEmpty(PatchUrl.getInstance().getVersion())){
+                    version = PatchUrl.getInstance().getVersion();
+                }else{
+                    File pomFile = new File(PatchUrl.getInstance().getDirGit() + "/" + jar + "/pom.xml");
+                    version = MavenUtils.getVersion(pomFile);
+                }
                 newJars.put(jar, jar + "-" + version + CommonConsts.JAR);
             }
             patchInfo.setFileName(newJars.get(jar));

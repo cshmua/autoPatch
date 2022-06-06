@@ -16,11 +16,11 @@ public class Main extends Application {
         mainStage = primaryStage;
         mainStage.setResizable(false);
         //设置窗口的图标.
-        mainStage.getIcons().add(new Image(getClass().getResourceAsStream("/image/logo.png")));
+        //mainStage.getIcons().add(new Image(getClass().getResourceAsStream("/image/logo.png")));
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/sample.fxml"));
         Parent root = loader.load();
-        mainStage.setTitle("提取补丁小程序");
-        Scene scene = new Scene(root, 700, 460);
+        mainStage.setTitle("规范标准加密工具");
+        Scene scene = new Scene(root, 400, 260);
         scene.getStylesheets().add(getClass().getResource("/css/main.css").toExternalForm());
         mainStage.setScene(scene);
         mainStage.show();

@@ -1,90 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.*?>
-<?import com.jfoenix.validation.RequiredFieldValidator?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
-<?import org.kordamp.ikonli.javafx.*?>
-<AnchorPane id="AnchorPane" fx:id="anchorPane" style="-fx-background-image: url(/image/background.png);-fx-background-repeat:no-repeat;-fx-background-size:100% 100%;" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="485.0" prefWidth="722.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
-    <children>
-<!--        <Label layoutX="206.0" layoutY="125.0" text="Hello!Welcome!" textFill="GOLD">
-            <font>
-                <Font name="System Bold Italic" size="29.0" />
-            </font>
-        </Label>-->
-        <JFXButton fx:id="btn_choseGitDir" onAction="#onChoseGitDirPath" buttonType="RAISED" layoutX="313.0" layoutY="173.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="113.0" text="请选择项目目录" style="-fx-font-size:13px;-fx-background-color:WHITE;"/>
-        <JFXButton fx:id="btn_choseTargetWar" onAction="#onChoseTargetWar" buttonType="RAISED" layoutX="438.0" layoutY="173.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="113.0" text="请选择war包" style="-fx-font-size:13px;-fx-background-color:WHITE;"/>
-        <JFXButton fx:id="btn_choseTargetDir" onAction="#onChoseTargetDirPath" buttonType="RAISED" layoutX="563.0" layoutY="173.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="113.0" text="请选择补丁目录" style="-fx-font-size:13px;-fx-background-color:WHITE;"/>
+<AnchorPane id="AnchorPane" fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity" prefHeight="485.0" prefWidth="722.0" xmlns="http://javafx.com/javafx/8.0.121"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+    <JFXButton fx:id="btn_choseTargetFile" onAction="#onChoseTargetFile" buttonType="RAISED" layoutX="48.0" layoutY="33.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="113.0" text="请选择加密原文" style="-fx-font-size:13px;-fx-background-color:WHITE;"/>
+    <JFXButton fx:id="btn_choseTargetDir" onAction="#onChoseTargetDirPath" buttonType="RAISED" layoutX="253.0" layoutY="33.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="113.0" text="请选择输出目录" style="-fx-font-size:13px;-fx-background-color:WHITE;"/>
 
-        <Label layoutX="329.0" layoutY="228.0" text="项目目录名" textFill="DARKORANGE">
-            <font>
-                <Font name="System Bold" size="15.0" />
-            </font></Label>
-        <JFXTextField fx:id="tf_gitDir" focusColor="DEEPSKYBLUE" layoutX="420.0" layoutY="228.0" promptText="请选择或输入项目目录" prefWidth="250.0" style="-fx-background-color: #FFFFFF;" />
+<!--    <Label layoutX="40.0" layoutY="86.0" text="票据编码" textFill="DARKORANGE">
+        <font>
+            <Font name="System Bold" size="15.0"/>
+        </font>
+    </Label>
+    <JFXTextField fx:id="tf_billCode" focusColor="DEEPSKYBLUE" layoutX="130.0" layoutY="85.0"
+                  prefWidth="250.0" style="-fx-background-color: #FFFFFF;"/>-->
 
-        <Label layoutX="329.0" layoutY="257.0" text="上次提交" textFill="DARKORANGE">
-            <font>
-                <Font name="System Bold" size="15.0" />
-            </font></Label>
-        <JFXComboBox fx:id="cb_oldCommit" layoutX="420.0" layoutY="257.0" style="-fx-background-color: #FFFFFF;" prefWidth="250.0" promptText="选择一个提交记录（可为空）">
-        </JFXComboBox>
+    <Label layoutX="40.0" layoutY="115.0" onDragExited="#DragFile" text="原文地址" textFill="DARKORANGE">
+        <font>
+            <Font name="System Bold" size="15.0"/>
+        </font>
+    </Label>
+    <JFXTextField fx:id="tf_targetFile" focusColor="DEEPSKYBLUE" onDragExited="#DragFile" layoutX="130.0" layoutY="114.0"
+                  promptText="请选择或输入加密原文地址" prefWidth="250.0" style="-fx-background-color: #FFFFFF;"/>
 
-        <Label layoutX="329.0" layoutY="286.0" text="本次提交" textFill="DARKORANGE">
-            <font>
-                <Font name="System Bold" size="15.0" />
-            </font></Label>
-        <JFXComboBox fx:id="cb_newCommit" layoutX="420.0" layoutY="286.0" style="-fx-background-color: #FFFFFF;" prefWidth="250.0" promptText="选择一个提交记录">
-            <validators>
-                <RequiredFieldValidator message="Input Required!"><FontIcon styleClass="error-icon"/>
-                </RequiredFieldValidator>
-            </validators>
-        </JFXComboBox>
+    <Label layoutX="40.0" layoutY="144.0" text="输出目录名" textFill="DARKORANGE">
+        <font>
+            <Font name="System Bold" size="15.0"/>
+        </font>
+    </Label>
+    <JFXTextField fx:id="tf_targetDir" focusColor="DEEPSKYBLUE" layoutX="130.0" layoutY="143.0" promptText="请选择或输入文件输出目录"
+                  prefWidth="250.0" style="-fx-background-color: #FFFFFF;"/>
 
-        <Label layoutX="330.0" layoutY="315.0" onDragExited="#DragFile" text="war包地址" textFill="DARKORANGE">
-            <font>
-                <Font name="System Bold" size="15.0" />
-            </font></Label>
-        <JFXTextField fx:id="tf_targetWar" focusColor="DEEPSKYBLUE" onDragExited="#DragFile" layoutX="420.0" layoutY="314.0" promptText="请选择或输入war包地址" prefWidth="250.0" style="-fx-background-color: #FFFFFF;" />
+    <Label layoutX="40.0" layoutY="173.0" text="票据编码" textFill="DARKORANGE">
+        <font>
+            <Font name="System Bold" size="15.0"/>
+        </font>
+    </Label>
+    <JFXTextField fx:id="tf_targetSecretKey" focusColor="DEEPSKYBLUE" layoutX="130.0" layoutY="172.0"
+                  prefWidth="250.0" style="-fx-background-color: #FFFFFF;"/>
 
-        <Label layoutX="330.0" layoutY="344.0" text="补丁目录名" textFill="DARKORANGE">
-            <font>
-                <Font name="System Bold" size="15.0" />
-            </font></Label>
-        <JFXTextField fx:id="tf_targetDir" focusColor="DEEPSKYBLUE" layoutX="420.0" layoutY="343.0" promptText="请选择或输入补丁目录" prefWidth="250.0" style="-fx-background-color: #FFFFFF;" />
+    <JFXButton fx:id="btn_create" onAction="#onEncrypt" buttonType="RAISED" layoutX="148.0" layoutY="209.0"
+               mnemonicParsing="false" prefHeight="23.0" prefWidth="113.0" text="加密"
+               style="-fx-text-fill:WHITE;-fx-background-color:#5264AE;-fx-font-size:13px;"/>
 
-        <Label layoutX="59.0" layoutY="373.0" text="版本号" textFill="DARKORANGE">
-            <font>
-                <Font name="System Bold" size="15.0" />
-            </font></Label>
-        <JFXTextField fx:id="tf_version" focusColor="DEEPSKYBLUE" layoutX="118.0" layoutY="372.0" promptText="版本号（手动输入时可选）" prefWidth="188.0" style="-fx-background-color: #FFFFFF;" />
-
-        <Label layoutX="330.0" layoutY="373.0" text="补丁文件名" textFill="DARKORANGE">
-            <font>
-                <Font name="System Bold" size="15.0" />
-            </font></Label>
-        <JFXTextField fx:id="tf_targetFile" focusColor="DEEPSKYBLUE" layoutX="420.0" layoutY="372.0" promptText="请输入补丁文件名称" prefWidth="250.0" style="-fx-background-color: #FFFFFF;" />
-
-        <Label layoutX="77.0" layoutY="60.0" prefHeight="55.0" prefWidth="250.0" text="提取补丁小程序" textFill="DEEPSKYBLUE">
-            <font>
-                <Font name="System Bold Italic" size="33.0" />
-            </font>
-        </Label>
-
-        <Separator layoutX="322.0" layoutY="403.0" prefHeight="4.0" prefWidth="344.0" />
-        <JFXButton fx:id="btn_create" onAction="#onCreatePatch" buttonType="RAISED" layoutX="438.0" layoutY="409.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="113.0" text="提取补丁" style="-fx-text-fill:WHITE;-fx-background-color:#5264AE;-fx-font-size:13px;"/>
-        <Hyperlink layoutX="593.0" layoutY="420.0"  prefHeight="21.0" prefWidth="100.0" text="CREATE BY CSH" textFill="GREEN" />
-
-        <JFXDialog fx:id="dialog_result">
-            <JFXDialogLayout>
-                <heading>
-                    <Label>结果</Label>
-                </heading>
-                <actions>
-                    <JFXButton fx:id="btn_confirm" styleClass="dialog-accept">确定
-                    </JFXButton>
-                </actions>
-            </JFXDialogLayout>
-        </JFXDialog>
-    </children>
+    <JFXDialog fx:id="dialog_result">
+        <JFXDialogLayout>
+            <heading>
+                <Label>结果</Label>
+            </heading>
+            <actions>
+                <JFXButton fx:id="btn_confirm" styleClass="dialog-accept">确定
+                </JFXButton>
+            </actions>
+        </JFXDialogLayout>
+    </JFXDialog>
 </AnchorPane>

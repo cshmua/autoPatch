@@ -40,4 +40,5 @@ public interface CommonConsts {
 
     String CLASSES_DIRECTORY = "WEB-INF/classes/";
 
+    String XLS = ".xls";
 }
